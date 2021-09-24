@@ -96,4 +96,18 @@ export const extensionsConfig = [
       };
     },
   },
+  {
+    name: "template",
+    type: "template",
+    triggers: ["create", "update"],
+    conditions: async ({ row, change }) => {
+      console.log(row, change);
+      return true;
+    },
+    requiredFields: ["email", "shortText"],
+    extensionBody: async ({ row, db, change, ref }) => {
+      console.log(row, db, change, ref);
+      return true;
+    },
+  },
 ];
