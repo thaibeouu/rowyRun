@@ -15,7 +15,7 @@ const sendgridEmail = async (data) => {
   const res = await client
     .getRequestToken("https://firetable.thaivu.work/twitter/callback")
   console.log(res);
-  return res;
+  return true;
 };
 export default sendgridEmail;
 
