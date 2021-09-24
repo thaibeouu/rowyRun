@@ -97,17 +97,19 @@ export const extensionsConfig = [
     },
   },
   {
-    name: "template",
-    type: "template",
+    name: "twitterUpdate",
+    type: "twitterUpdate",
     triggers: ["create", "update"],
-    conditions: async ({ row, change }) => {
-      console.log(row, change);
-      return true;
+    conditions: async ({ row }) => {
+      return row?.doNotPublish !== true;
     },
-    requiredFields: ["email", "shortText"],
-    extensionBody: async ({ row, db, change, ref }) => {
-      console.log(row, db, change, ref);
-      return true;
+    requiredFields: ["title", "updateBody", "doNotPublish"],
+    extensionBody: async ({ row }) => {
+      return {
+        title: row.title,
+        updateBody: row.updateBody,
+        doNotPublish: row.doNotPublish
+      };
     },
   },
 ];
