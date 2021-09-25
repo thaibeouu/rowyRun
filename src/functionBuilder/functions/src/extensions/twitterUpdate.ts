@@ -1,22 +1,31 @@
 export const dependencies = {
-  "twitter-lite": "^1.1.0",
+  "twitter-api-v2": "^1.5.2",
 };
-const sendgridEmail = async (data) => {
-  // const { msg } = data;
-  const utilFns = require("../utils");
-  const twApiKey = await utilFns.getSecret("twitter_api_key");
-  const twApiSecret = await utilFns.getSecret("twitter_api_secret");
-  const Twitter = require("twitter-lite");
-  const client = new Twitter({
-    consumer_key: twApiKey,
-    consumer_secret: twApiSecret,
-  });
+const twitterUpdate = async (data, context) => {
+  console.log(data, context);
+  const TwitterApi = require("twitter-api-v2");
+  const { db } = require("../firebaseConfig");
 
-  const res = await client
-    .getRequestToken("https://firetable.thaivu.work/twitter/callback")
-  console.log(res);
+  db.collection("twitter_auth")
+    .doc("megadragonzx@gmail.com")
+    .get()
+    .then((res) => {
+      const client = new TwitterApi({
+        appKey: res.get("api_key"),
+        appSecret: res.get("api_secret"),
+        accessToken: res.get("oauth_token"),
+        accessSecret: res.get("oauth_token_secret"),
+      });
+      client
+        .login(res.get("oauth_verifier"))
+        .then(({ client: loggedClient }) => {
+          loggedClient.v1.tweet("Test tweet.");
+        })
+        .catch(() =>
+          res.status(403).send("Invalid verifier or access tokens!")
+        );
+    });
+
   return true;
 };
-export default sendgridEmail;
-
-
+export default twitterUpdate;
