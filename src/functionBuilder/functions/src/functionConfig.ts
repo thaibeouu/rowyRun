@@ -96,20 +96,20 @@ export const extensionsConfig = [
       };
     },
   },
-  {
-    name: "twitterUpdate",
-    type: "twitterUpdate",
-    triggers: ["create", "update"],
-    conditions: async ({ row }) => {
-      return row?.doNotPublish !== true;
-    },
-    requiredFields: ["title", "updateBody", "doNotPublish"],
-    extensionBody: async ({ row }) => {
-      return {
-        title: row.title,
-        updateBody: row.updateBody,
-        doNotPublish: row.doNotPublish,
-      };
-    },
-  },
+  // {
+  //   name: "twitterUpdate",
+  //   type: "twitterUpdate",
+  //   triggers: ["create", "update"],
+  //   conditions: async ({ row }) => {
+  //     return row?.doNotPublish !== true;
+  //   },
+  //   requiredFields: ["title", "updateBody", "doNotPublish"],
+  //   extensionBody: async ({ row }) => {
+  //     return {
+  //       title: row.title,
+  //       updateBody: row.updateBody,
+  //       doNotPublish: row.doNotPublish,
+  //     };
+  //   },
+  // },
 ];
