@@ -10,7 +10,8 @@ const secrets = new SecretManagerServiceClient();
 
 export const getSecret = async (name: string, v: string = "latest") => {
   const [version] = await secrets.accessSecretVersion({
-    name: `projects/${process.env.GCLOUD_PROJECT}/secrets/${name}/versions/${v}`,
+    // name: `projects/${process.env.GCLOUD_PROJECT}/secrets/${name}/versions/${v}`,
+    name: `projects/459488019471/secrets/${name}/versions/${v}`,
   });
   const payload = version.payload?.data?.toString();
   if (payload && payload[0] === "{") {
