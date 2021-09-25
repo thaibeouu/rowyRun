@@ -6,7 +6,8 @@ const twitterUpdate = async (data, context) => {
   const TwitterApi = require("twitter-api-v2");
   const { db } = require("../firebaseConfig");
 
-  db.collection("twitter_auth")
+  return db
+    .collection("twitter_auth")
     .doc("megadragonzx@gmail.com")
     .get()
     .then((res) => {
@@ -20,12 +21,8 @@ const twitterUpdate = async (data, context) => {
         .login(res.get("oauth_verifier"))
         .then(({ client: loggedClient }) => {
           loggedClient.v1.tweet("Test tweet.");
-        })
-        .catch(() =>
-          res.status(403).send("Invalid verifier or access tokens!")
-        );
-    });
-
-  return true;
+        });
+    })
+    .catch((e) => console.error(e));
 };
 export default twitterUpdate;

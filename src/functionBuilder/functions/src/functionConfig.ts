@@ -108,7 +108,7 @@ export const extensionsConfig = [
       return {
         title: row.title,
         updateBody: row.updateBody,
-        doNotPublish: row.doNotPublish
+        doNotPublish: row.doNotPublish,
       };
     },
   },
