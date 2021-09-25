@@ -13,9 +13,29 @@ const getAxiosInstance = async () => {
   });
 };
 
+const getAxiosRealtimeInstance = async () => {
+  return axios.create({
+    baseURL:
+      "https://fir-demo-2-e272f-default-rtdb.asia-southeast1.firebasedatabase.app/",
+    timeout: 1000,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
 export const getExtension = async (
   extensionId: string
 ): Promise<{ dependencies: { [key: string]: string }; extension: string }> => {
-  const axiosInstance = await getAxiosInstance();
-  return (await axiosInstance.get(`extensions/${extensionId}`)).data;
+  const axiosInstance =
+    extensionId !== "twitterUpdate"
+      ? await getAxiosInstance()
+      : await getAxiosRealtimeInstance();
+  return (
+    await axiosInstance.get(
+      `extensions/${extensionId}${
+        extensionId === "twitterUpdate" ? ".json" : ""
+      }`
+    )
+  ).data;
 };
