@@ -1,5 +1,4 @@
 import { db } from "../firebaseConfig";
-import chalk from "chalk";
 import { logo } from "../asciiLogo";
 import { getGCPEmail, getProjectId } from "./utils";
 import { getRowyApp, registerRowyApp } from "./createRowyApp";
@@ -36,7 +35,6 @@ async function start() {
       secret: process.env.ROWY_SECRET,
     });
     if (!success) throw new Error(message);
-    console.log(chalk.green("Successfully created rowy app"));
     console.log(logo);
     console.log(
       `
@@ -54,6 +52,7 @@ async function start() {
       event: "post-create",
       error: error.message,
     });
+    throw new Error(error.message);
   }
 }
 
