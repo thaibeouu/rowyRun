@@ -8,8 +8,8 @@ export type IExtensionType =
   | "slackMessage"
   | "sendgridEmail"
   | "apiCall"
-  | "template"
-  | "twilioMessage";
+  | "twilioMessage"
+  | "twitterUpdate";
 
 export type IExtensionTrigger = "create" | "update" | "delete";
 
